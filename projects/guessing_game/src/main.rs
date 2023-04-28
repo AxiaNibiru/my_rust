@@ -4,11 +4,32 @@
 
 use std::cmp::Ordering;
 use std::io;
+use std::path::Component::Prefix;
 use std::str::FromStr;
 use rand::Rng;
 
 fn main() {
-    guess2()
+    guess3()
+}
+
+fn  guess3() {
+    println!("guess: ");
+
+    let mut guess = String::new();
+    std::io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    let guess : i32 = guess.trim().parse().expect("Please type a number!");
+
+    let answer: i32 = rand::thread_rng().gen_range(1..=100);
+    println!("the answer is {}", &answer);
+
+    match guess.cmp(&answer) {
+        Ordering::Greater => println!("Greater"),
+        Ordering::Less => println!("Less"),
+        Ordering::Equal => println!("Equal")
+    }
 }
 
 fn guess2() {
