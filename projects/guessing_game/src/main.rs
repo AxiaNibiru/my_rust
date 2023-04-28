@@ -1,17 +1,20 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
+#![allow(unused_imports)]
 
+use std::cmp::Ordering;
 use std::io;
+use std::str::FromStr;
 use rand::Rng;
 
 fn main() {
-    guess2();
+    guess2()
 }
 
 fn guess2() {
     println!("Guess the number!");
 
-    print!("Please input your guess number: {}", std::);
+    println!("Please input your guess number: ");
 
     let mut input_number: String = String::new();
 
@@ -21,6 +24,12 @@ fn guess2() {
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
     println!("the answer is {}", secret_number);
+
+    match input_number.cmp(&secret_number.to_string()){
+        Ordering::Greater => println!("too Greater"),
+        Ordering::Less => println!("too Less"),
+        Ordering::Equal => println!("Equals")
+    }
 }
 
 
