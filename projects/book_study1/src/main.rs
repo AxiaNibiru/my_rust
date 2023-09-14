@@ -9,7 +9,42 @@ use std::{
 
 // 不要修改 main 中的代码
 fn main() {
-    prac_2_4_5();
+    prac_2_6_3();
+}
+
+struct Cricle{
+    x: f64,
+    y: f64,
+    radius: f64,
+}
+
+impl Cricle {
+    fn new(x: f64, y: f64, radius: f64) -> Cricle {
+        Cricle{
+            x, y, radius
+        }
+    }
+
+    fn area(&self) -> f64 {
+        std::f64::consts::PI * (self.x * self.y)
+    }
+}
+
+fn prac_2_6_3() {
+    let mut stack = Vec::new();
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+
+    while let Some(i) = stack.pop() {
+        println!("{}", i);
+    }
+
+    let v = vec!['a', 'b', 'c'];
+    for (i, v) in v.iter().enumerate() {
+        println!("{} is {}", i, v);
+    }
+
 }
 
 fn prac_2_4_5() {
