@@ -6,6 +6,7 @@ use std::{
     fmt::{format, Display},
     vec,
 };
+use std::arch::x86_64::_mm256_or_pd;
 use num::range;
 
 // 不要修改 main 中的代码
@@ -24,8 +25,62 @@ fn largest<T>(list: &[T]) -> &T
 
 fn prac_2_8_1() {
     let arr: [i32; 5] = [1, 2, 3, 4, 5];
-    let largest =  largest(&arr[..]);
+    let largest = largest(&arr[..]);
     println!("{}", largest);
+
+    fn add<T: std::ops::Add<Output=T>>(a: T, b: T) -> T {
+        a + b
+    }
+
+    struct Point<T, U> {
+        x: T,
+        y: U,
+    }
+    impl<T, U> Point<T, U> {
+        fn mixup<V, W>(self, other: Point<V, W>) -> Point<V, U> {
+            Point {
+                x: other.x,
+                y: self.y,
+            }
+        }
+    }
+
+    let p1 = Point { x: 5, y: 10.4 };
+    let p2 = Point { x: "Hello", y: 'c' };
+    let p3 = Point::mixup(p1, p2);
+    println!("{}, {}", p3.x, p3.y);
+
+    pub fn display_array<T: std::fmt::Debug, const N: usize>(arr: [T; N]) {
+        println!("{:?}", arr);
+    }
+
+    let arr = [1, 2, 3];
+    let arr2 = [1, 2];
+    display_array(arr);
+    display_array(arr2);
+
+    struct A;          // 具体的类型 `A`.
+    struct S(A);       // 具体的类型 `S`.
+    struct SGen<T>(T); // 泛型 `SGen`.
+
+    fn reg_fn(_s: S) {}
+
+    fn gen_spec_t(_s: SGen<A>) {}
+
+    fn gen_spec_i32(_s: SGen<i32>) {}
+
+    fn generic<T>(_s: SGen<T>) {}
+
+    // 使用非泛型函数
+    reg_fn(S(A {}));          // 具体的类型
+    gen_spec_t(SGen(A {}));   // 隐式地指定类型参数  `A`.
+    gen_spec_i32(SGen(5)); // 隐式地指定类型参数`i32`.
+
+    // 显式地指定类型参数 `char`
+    generic::<char>(SGen('a'));
+
+    // 隐式地指定类型参数 `char`.
+    generic(SGen('a'));
 
 }
 
