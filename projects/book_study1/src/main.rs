@@ -6,12 +6,15 @@ use std::{
     fmt::{format, Display},
     vec,
 };
-use std::arch::x86_64::_mm256_or_pd;
-use num::range;
+use std::fmt::Debug;
+use std::ops::Add;
+use std::ptr::write;
+use std::sync::Arc;
+
 
 // 不要修改 main 中的代码
 fn main() {
-    prac_2_8_1();
+    prac_2_8_2();
 }
 
 fn largest<T>(list: &[T]) -> &T
@@ -21,6 +24,112 @@ fn largest<T>(list: &[T]) -> &T
         if item > result { result = item; }
     }
     &result
+}
+
+fn prac_2_8_2() {
+    pub trait Summary {
+        fn summarize(&self) -> String;
+    }
+
+    #[derive(Debug, Clone)]
+    pub struct Post {
+        pub title: String,
+        pub author: String,
+        pub content: String,
+    }
+
+    impl Summary for Post {
+        fn summarize(&self) -> String {
+            format!("文章{}，作者是{}", self.title, self.author)
+        }
+    }
+
+    pub struct Weibo {
+        pub username: String,
+        pub content: String,
+    }
+
+    impl Summary for Weibo {
+        fn summarize(&self) -> String {
+            format!("{}发表了{}", self.username, self.content)
+        }
+    }
+
+    let post = Post { title: "Rust语言简介".to_string(), author: "Sunface".to_string(), content: "Rust棒极了!".to_string() };
+    let weibo = Weibo { username: "sunface".to_string(), content: "好像微博没Tweet好用".to_string() };
+
+    println!("{}", post.summarize());
+    println!("{}", weibo.summarize());
+
+    pub fn notify(item: &impl Summary) {
+        println!("Breaking news{}", item.summarize());
+    }
+
+    pub fn make_one<T: Copy>(a: &[T]) -> T {
+        a[0]
+    }
+
+    let a: i32 = 10;
+    let b: u16 = 100;
+    let b_ = b.try_into().unwrap();
+    let a_: u16 = a.try_into().unwrap();
+    if a < b_ { println!("a less than b") }
+    if a_ < b { println!("a less than b") }
+
+    let mut a = 64;
+    let a_ = &mut a;
+    *a_ = 34;
+
+    fn do_1<T: Clone + Debug>(a: &T) {
+        println!("{:?}", a);
+        let a_ : &T = a;
+        let b: T = a.clone();
+        let c : T = (*a).clone();
+    }
+
+    fn do_2<T>(a: &T) {
+        let a_: &T = a;
+        let b: &T = a.clone();
+    }
+    let post = Post { title: "Rust语言简介".to_string(), author: "Sunface".to_string(), content: "Rust棒极了!".to_string() };
+    do_1(&post);
+    do_2(&post);
+
+    #[derive(Clone)]
+    struct Container<T>(Arc<T>);
+
+    fn clone_containers<T>(foo: &Container<i32>, bar: &Container<T>) {
+        let foo_cloned = foo.clone();
+        let bar_cloned = bar.clone();
+    }
+
+    use std::ops::Add;
+    #[derive(Debug)]
+    struct Point<T: Add<Output=T>> {
+        x: T,
+        y: T,
+    }
+
+    impl<T: Add<Output = T>> Add for Point<T> {
+        type Output = Point<T>;
+
+        fn add(self, p: Point<T>) -> Point<T> {
+            Point {
+                x: self.x + p.x,
+                y: self.y + p.y,
+            }
+        }
+    }
+
+    let p1 = Point{x: 1.1f32, y: 1.1f32};
+    let p2 = Point{x: 2.1f32, y: 2.1f32};
+    println!("{:?}",  p1 + p2);
+
+    let p3 = Point{x: 1i32, y: 1i32};
+    let p4 = Point{x: 2i32, y: 2i32};
+    println!("{:?}", p3.add(p4));
+
+
 }
 
 fn prac_2_8_1() {
@@ -81,7 +190,6 @@ fn prac_2_8_1() {
 
     // 隐式地指定类型参数 `char`.
     generic(SGen('a'));
-
 }
 
 #[derive(Debug)]
