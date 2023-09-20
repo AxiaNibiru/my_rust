@@ -19,8 +19,11 @@ fn main() {
 
 
 fn prac_2_8_3() {
-    trait Draw {}
-    struct Screen<T> {
+    trait Draw {
+        fn draw(&self) {}
+    }
+
+    struct Screen<T: Draw> {
         pub components: Vec<T>,
     }
 
