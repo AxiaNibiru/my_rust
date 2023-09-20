@@ -14,8 +14,65 @@ use std::sync::Arc;
 
 // 不要修改 main 中的代码
 fn main() {
-    prac_2_8_2();
+    prac_2_8_3();
 }
+
+
+fn prac_2_8_3() {
+    trait Draw {}
+    struct Screen<T> {
+        pub components: Vec<T>,
+    }
+
+    impl<T> Screen<T>
+        where T: Draw {
+        pub fn run(&self) {
+            for component in self.components.iter() {
+                component.draw();
+            }
+        }
+    }
+
+    trait Bird {
+        fn quack(&self);
+    }
+
+    struct Duck;
+    impl Duck {
+        fn fly(&self) {
+            println!("Look, the duck is flying")
+        }
+    }
+    struct Swan;
+    impl Swan {
+        fn fly(&self) {
+            println!("Look, the duck.. oh sorry, the swan is flying")
+        }
+    }
+
+    impl Bird for Duck {
+        fn quack(&self) {
+            println!("{}", "duck duck");
+        }
+    }
+
+    impl Bird for Swan {
+        fn quack(&self) {
+            println!("{}", "swan swan");
+        }
+    }
+
+    // 填空
+    let birds : [Box<dyn Bird>; 2]= [Box::new(Duck{}), Box::new(Swan{})];
+
+    for bird in birds {
+        bird.quack();
+        // 当 duck 和 swan 变成 bird 后，它们都忘了如何翱翔于天际，只记得该怎么叫唤了。。
+        // 因此，以下代码会报错
+        // bird.fly();
+    }
+}
+
 
 fn largest<T>(list: &[T]) -> &T
     where T: std::cmp::PartialOrd {
@@ -82,9 +139,9 @@ fn prac_2_8_2() {
 
     fn do_1<T: Clone + Debug>(a: &T) {
         println!("{:?}", a);
-        let a_ : &T = a;
+        let a_: &T = a;
         let b: T = a.clone();
-        let c : T = (*a).clone();
+        let c: T = (*a).clone();
     }
 
     fn do_2<T>(a: &T) {
@@ -110,7 +167,7 @@ fn prac_2_8_2() {
         y: T,
     }
 
-    impl<T: Add<Output = T>> Add for Point<T> {
+    impl<T: Add<Output=T>> Add for Point<T> {
         type Output = Point<T>;
 
         fn add(self, p: Point<T>) -> Point<T> {
@@ -121,15 +178,13 @@ fn prac_2_8_2() {
         }
     }
 
-    let p1 = Point{x: 1.1f32, y: 1.1f32};
-    let p2 = Point{x: 2.1f32, y: 2.1f32};
-    println!("{:?}",  p1 + p2);
+    let p1 = Point { x: 1.1f32, y: 1.1f32 };
+    let p2 = Point { x: 2.1f32, y: 2.1f32 };
+    println!("{:?}", p1 + p2);
 
-    let p3 = Point{x: 1i32, y: 1i32};
-    let p4 = Point{x: 2i32, y: 2i32};
+    let p3 = Point { x: 1i32, y: 1i32 };
+    let p4 = Point { x: 2i32, y: 2i32 };
     println!("{:?}", p3.add(p4));
-
-
 }
 
 fn prac_2_8_1() {
