@@ -2,6 +2,7 @@
 #![allow(unused)]
 #![allow(unused_variables)]
 
+use std::collections::btree_map::Values;
 use std::fmt::Debug;
 use std::ops::Add;
 use std::ptr::write;
@@ -13,7 +14,70 @@ use std::{
 
 // 不要修改 main 中的代码
 fn main() {
-    prac_2_8_4();
+    prac_2_9_1();
+}
+
+fn prac_2_9_1() {
+    let v = vec![1, 2, 3];
+    if let Some(value) = v.get(2) {
+        println!("{value}");
+    }
+
+    let mut vec = vec![1.0, 5.6, 10.3, 2.0, 15f32];
+    vec.sort_unstable_by(|a, b| a.partial_cmp(b).unwrap());
+    assert_eq!(vec, vec![1.0, 2.0, 5.6, 10.3, 15f32]);
+
+    // 实现 Ord 需要我们实现 Ord、Eq、PartialEq、PartialOrd 这些属性
+    // 默认的Ord排序规则为按字段顺序来进行排序，下面的话就是先按name排序，如果相等则使用age进行排序
+    #[derive(Debug, PartialEq, PartialOrd, Eq, Ord)]
+    struct Person {
+        name: String,
+        age: u32,
+    }
+
+    impl Person {
+        fn new(name: String, age: u32) -> Self {
+            Person {
+                name: name,
+                age: age,
+            }
+        }
+    }
+
+    let mut people = vec![
+        Person::new("Zoe".to_string(), 20),
+        Person::new("Al".to_string(), 60),
+        Person::new("John".to_string(), 1),
+    ];
+
+    people.sort_unstable_by(|a, b| b.age.cmp(&a.age));
+    println!("{:?}", &people);
+    people.sort_unstable();
+    println!("{:?}", people);
+    let arr: [u32; 3] = [1, 2, 3];
+    arr.to_vec();
+    let mut v1: Vec<u32> = Vec::new();
+    arr.map(|a| v1.push(a));
+    println!("{:?}", arr);
+    println!("{:?}", v1);
+    v1.extend(v.iter());
+    let v2: Vec<u32> = arr.into();
+    // let str_vec: Vec<u32> = "String".to_string().into();
+    Vec::from("");
+
+    // 修复错误并实现缺失的代码
+    let mut v = Vec::from([1, 2, 3, 4, 5]);
+    for i in 0..5 {
+        println!("{:?}", v[i])
+    }
+
+    for i in 0..5 {
+        v[i] += 1;
+    }
+
+    assert_eq!(v, vec![2, 3, 4, 5, 6]);
+
+    println!("Success!")
 }
 
 fn prac_2_8_4() {
@@ -47,8 +111,6 @@ fn prac_2_8_4() {
             write!(f, "[{}]", self.0.join(", "))
         }
     }
-
-    
 }
 
 fn prac_2_8_3() {
@@ -518,6 +580,8 @@ fn prac_2_4_5() {
         println!("\t{:?}, {}", a, sum);
     }
 }
+
+use num::complex::ParseComplexError;
 
 use crate::List::*;
 
