@@ -2,21 +2,54 @@
 #![allow(unused)]
 #![allow(unused_variables)]
 
-use std::{
-    fmt::{format, Display},
-    vec,
-};
 use std::fmt::Debug;
 use std::ops::Add;
 use std::ptr::write;
 use std::sync::Arc;
-
+use std::{
+    fmt::{format, Display},
+    vec,
+};
 
 // 不要修改 main 中的代码
 fn main() {
-    prac_2_8_3();
+    prac_2_8_4();
 }
 
+fn prac_2_8_4() {
+    trait DemoTrait<T> {
+        fn run(&self, a: &T);
+    }
+
+    use std::ops::Add;
+    struct Millimeters(u32);
+    struct Meters(u32);
+
+    impl Add<Meters> for Millimeters {
+        type Output = Millimeters;
+        fn add(self, rhs: Meters) -> Self::Output {
+            Millimeters(self.0 + (rhs.0 * 1000))
+        }
+    }
+
+    trait A {
+        fn a(&self);
+    }
+
+    trait B: A {
+        fn a(&self);
+    }
+
+    use std::fmt;
+    struct Wrapper(Vec<String>);
+    impl Display for Wrapper {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            write!(f, "[{}]", self.0.join(", "))
+        }
+    }
+
+    
+}
 
 fn prac_2_8_3() {
     trait Draw {
@@ -28,7 +61,9 @@ fn prac_2_8_3() {
     }
 
     impl<T> Screen<T>
-        where T: Draw {
+    where
+        T: Draw,
+    {
         pub fn run(&self) {
             for component in self.components.iter() {
                 component.draw();
@@ -66,7 +101,7 @@ fn prac_2_8_3() {
     }
 
     // 填空
-    let birds : [Box<dyn Bird>; 2]= [Box::new(Duck{}), Box::new(Swan{})];
+    let birds: [Box<dyn Bird>; 2] = [Box::new(Duck {}), Box::new(Swan {})];
 
     for bird in birds {
         bird.quack();
@@ -76,12 +111,15 @@ fn prac_2_8_3() {
     }
 }
 
-
 fn largest<T>(list: &[T]) -> &T
-    where T: std::cmp::PartialOrd {
+where
+    T: std::cmp::PartialOrd,
+{
     let mut result = list.get(0).unwrap();
     for item in list.iter() {
-        if item > result { result = item; }
+        if item > result {
+            result = item;
+        }
     }
     &result
 }
@@ -115,8 +153,15 @@ fn prac_2_8_2() {
         }
     }
 
-    let post = Post { title: "Rust语言简介".to_string(), author: "Sunface".to_string(), content: "Rust棒极了!".to_string() };
-    let weibo = Weibo { username: "sunface".to_string(), content: "好像微博没Tweet好用".to_string() };
+    let post = Post {
+        title: "Rust语言简介".to_string(),
+        author: "Sunface".to_string(),
+        content: "Rust棒极了!".to_string(),
+    };
+    let weibo = Weibo {
+        username: "sunface".to_string(),
+        content: "好像微博没Tweet好用".to_string(),
+    };
 
     println!("{}", post.summarize());
     println!("{}", weibo.summarize());
@@ -133,8 +178,12 @@ fn prac_2_8_2() {
     let b: u16 = 100;
     let b_ = b.try_into().unwrap();
     let a_: u16 = a.try_into().unwrap();
-    if a < b_ { println!("a less than b") }
-    if a_ < b { println!("a less than b") }
+    if a < b_ {
+        println!("a less than b")
+    }
+    if a_ < b {
+        println!("a less than b")
+    }
 
     let mut a = 64;
     let a_ = &mut a;
@@ -151,7 +200,11 @@ fn prac_2_8_2() {
         let a_: &T = a;
         let b: &T = a.clone();
     }
-    let post = Post { title: "Rust语言简介".to_string(), author: "Sunface".to_string(), content: "Rust棒极了!".to_string() };
+    let post = Post {
+        title: "Rust语言简介".to_string(),
+        author: "Sunface".to_string(),
+        content: "Rust棒极了!".to_string(),
+    };
     do_1(&post);
     do_2(&post);
 
@@ -165,12 +218,12 @@ fn prac_2_8_2() {
 
     use std::ops::Add;
     #[derive(Debug)]
-    struct Point<T: Add<Output=T>> {
+    struct Point<T: Add<Output = T>> {
         x: T,
         y: T,
     }
 
-    impl<T: Add<Output=T>> Add for Point<T> {
+    impl<T: Add<Output = T>> Add for Point<T> {
         type Output = Point<T>;
 
         fn add(self, p: Point<T>) -> Point<T> {
@@ -181,8 +234,14 @@ fn prac_2_8_2() {
         }
     }
 
-    let p1 = Point { x: 1.1f32, y: 1.1f32 };
-    let p2 = Point { x: 2.1f32, y: 2.1f32 };
+    let p1 = Point {
+        x: 1.1f32,
+        y: 1.1f32,
+    };
+    let p2 = Point {
+        x: 2.1f32,
+        y: 2.1f32,
+    };
     println!("{:?}", p1 + p2);
 
     let p3 = Point { x: 1i32, y: 1i32 };
@@ -195,7 +254,7 @@ fn prac_2_8_1() {
     let largest = largest(&arr[..]);
     println!("{}", largest);
 
-    fn add<T: std::ops::Add<Output=T>>(a: T, b: T) -> T {
+    fn add<T: std::ops::Add<Output = T>>(a: T, b: T) -> T {
         a + b
     }
 
@@ -226,8 +285,8 @@ fn prac_2_8_1() {
     display_array(arr);
     display_array(arr2);
 
-    struct A;          // 具体的类型 `A`.
-    struct S(A);       // 具体的类型 `S`.
+    struct A; // 具体的类型 `A`.
+    struct S(A); // 具体的类型 `S`.
     struct SGen<T>(T); // 泛型 `SGen`.
 
     fn reg_fn(_s: S) {}
@@ -239,8 +298,8 @@ fn prac_2_8_1() {
     fn generic<T>(_s: SGen<T>) {}
 
     // 使用非泛型函数
-    reg_fn(S(A {}));          // 具体的类型
-    gen_spec_t(SGen(A {}));   // 隐式地指定类型参数  `A`.
+    reg_fn(S(A {})); // 具体的类型
+    gen_spec_t(SGen(A {})); // 隐式地指定类型参数  `A`.
     gen_spec_i32(SGen(5)); // 隐式地指定类型参数`i32`.
 
     // 显式地指定类型参数 `char`
@@ -264,7 +323,10 @@ impl Rectangle2 {
 
 // 方法和关联函数
 fn prac_2_7() {
-    let rect1 = Rectangle2 { width: 30, height: 50 };
+    let rect1 = Rectangle2 {
+        width: 30,
+        height: 50,
+    };
     println!(
         "The area of the rectangle is {} square pixels.",
         rect1.area()
@@ -298,7 +360,6 @@ fn prac_2_7() {
             // 使用点操作符可以访问 `self` 中的结构体字段
             let Point { x: x1, y: y1 } = self.p1;
             let Point { x: x2, y: y2 } = self.p2;
-
 
             // `abs` 是一个 `f64` 类型的方法，会返回调用者的绝对值
             ((x1 - x2) * (y1 - y2)).abs()
@@ -364,11 +425,7 @@ struct Cricle {
 
 impl Cricle {
     fn new(x: f64, y: f64, radius: f64) -> Cricle {
-        Cricle {
-            x,
-            y,
-            radius,
-        }
+        Cricle { x, y, radius }
     }
 
     fn area(&self) -> f64 {
@@ -385,7 +442,7 @@ fn prac_2_6_4() {
     let x = 5;
     match x {
         1..=5 => println!("1..=5"),
-        _ => ()
+        _ => (),
     }
 
     let p = Point { x: 64, y: 67 };
@@ -394,20 +451,30 @@ fn prac_2_6_4() {
     println!("{}", a);
 
     enum Message {
-        Hello { id: i32 }
+        Hello { id: i32 },
     }
 
     let msg = Message::Hello { id: 5 };
     match msg {
-        Message::Hello { id: id_variable @ 3..=7 } => { println!("Found in rang {}", id_variable) }
-        Message::Hello { id: id_variable @ 10..=12 } => { println!("Found an id in another range") }
-        Message::Hello { id } => { println!("other id: {}", id) }
+        Message::Hello {
+            id: id_variable @ 3..=7,
+        } => {
+            println!("Found in rang {}", id_variable)
+        }
+        Message::Hello {
+            id: id_variable @ 10..=12,
+        } => {
+            println!("Found an id in another range")
+        }
+        Message::Hello { id } => {
+            println!("other id: {}", id)
+        }
     }
 
     let mut v = String::from("hello,");
     let r = &mut v;
     match *r {
-        ref mut value => value.push_str(" world!")
+        ref mut value => value.push_str(" world!"),
     }
 }
 
@@ -625,7 +692,7 @@ fn test2_2_1() {
             (*x)[0] = 0;
             println!("{:#?}", (*x))
         }; // 因为闭包捕获了可变变量a并做了修改，所以没有实现Copy trait
-        // let y = &x;
+           // let y = &x;
         c();
     }
     let z = *x;
