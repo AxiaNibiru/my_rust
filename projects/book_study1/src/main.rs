@@ -4,6 +4,7 @@
 
 use std::collections::btree_map::Values;
 use std::fmt::Debug;
+use std::hash::Hash;
 use std::ops::Add;
 use std::ptr::write;
 use std::sync::Arc;
@@ -12,9 +13,94 @@ use std::{
     vec,
 };
 
-// 不要修改 main 中的代码
 fn main() {
-    prac_2_9_1();
+    prac_2_9_2();
+}
+
+fn prac_2_9_2() {
+    use std::collections::HashMap;
+    let mut hash_map: HashMap<&str, i32> = HashMap::new();
+    hash_map.insert("key1", 1);
+    hash_map.insert("key2", 2);
+    let teams_list = vec![
+        ("中国队".to_string(), 100),
+        ("美国队".to_string(), 10),
+        ("日本队".to_string(), 50),
+    ];
+
+    let teams_map: HashMap<String, i32> = teams_list.into_iter().collect();
+    Some(&12).copied(); // 12 -> i32，copied内容需要实现Copy trait
+
+    let text = "hello world wonderful world";
+    let mut map: HashMap<&str, usize> = HashMap::new();
+    for word in text.split_ascii_whitespace() {
+        let count: &mut usize = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+    println!("{:?}", map);
+
+    use std::hash::BuildHasherDefault;
+    use twox_hash::XxHash64;
+
+    let mut hash: HashMap<_, _, BuildHasherDefault<XxHash64>> = Default::default();
+    hash.insert(42, "the answer");
+    assert_eq!(hash.get(&42), Some(&"the answer"));
+    println!("{:?}", hash);
+
+    let teams = [
+        ("Chinese Team", 100),
+        ("American Team", 10),
+        ("France Team", 50),
+    ];
+
+    let mut teams_map1 = HashMap::new();
+    for team in &teams {
+        teams_map1.insert(team.0, team.1);
+    }
+
+    // 使用两种方法实现 team_map2
+    // 提示:其中一种方法是使用 `collect` 方法
+    // let teams_map2: HashMap<&str, i32> = teams.into_iter().collect();
+    let mut teams_map2: HashMap<&str, i32> = HashMap::with_capacity(3);
+    teams.into_iter().for_each(|(k, v)| {
+        teams_map2.insert(k, v);
+    });
+
+    assert_eq!(teams_map1, teams_map2);
+
+    teams_map1.entry("").or_insert_with(|| 45);
+    println!("Success!");
+
+    let mut map = HashMap::new();
+    map.insert("a".to_string(), "asd");
+    map.get("a");
+
+    struct A {}
+    impl A {
+        fn a(a: &str) {}
+        //fn a(a: String) {} Error
+    }
+
+    #[derive(PartialEq, Eq, Hash)]
+    struct Viking {
+        name: String,
+        country: String,
+    }
+    impl Viking {
+        fn new(name: &str, country: &str) -> Viking {
+            Viking {
+                name: name.to_string(),
+                country: country.to_string(),
+            }
+        }
+    }
+    let vikings = HashMap::from([
+        (Viking::new("Einar", "Norway"), 25),
+        (Viking::new("Olaf", "Denmark"), 24),
+        (Viking::new("Harald", "Iceland"), 12),
+    ]);
+
+    assert_eq!("a", "a".to_string());
 }
 
 fn prac_2_9_1() {
