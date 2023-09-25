@@ -5,6 +5,7 @@
 use std::collections::btree_map::Values;
 use std::fmt::Debug;
 use std::hash::Hash;
+use std::io::{ErrorKind, Read};
 use std::ops::Add;
 use std::ptr::write;
 use std::sync::Arc;
@@ -14,7 +15,65 @@ use std::{
 };
 
 fn main() {
-    prac_2_11_1();
+    prac_2_11_2();
+}
+
+fn prac_2_11_2() {
+    use std::fs::File;
+    // let f = match File::open("./file/hello.txt") {
+    //     Ok(file) => file,
+    //     Err(error) => {
+    //         panic!("Problem opening the file: {:?}", error);
+    //     },
+    // };
+    let path = "src\\file\\file.txt";
+    let f = File::open(path);
+    let mut f = match f {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => match File::create(path) {
+                Ok(fc) => fc,
+                Err(e) => panic!("Problem creating file: {}", e),
+            },
+            other_error => panic!("Problem creating file: {}", other_error),
+        },
+    };
+    let mut text = String::new();
+    let file_size = f.read_to_string(&mut text).unwrap();
+    println!("file size:{}, file content: {}", file_size, text);
+    fn first(arr: &[i32]) -> Option<&i32> {
+        arr.get(0)
+    }
+
+    // 填空并修复错误
+    use std::num::ParseIntError;
+
+    fn multiply(n1_str: &str, n2_str: &str) -> Result<i32, ParseIntError> {
+        let n1 = n1_str.parse::<i32>();
+        let n2 = n2_str.parse::<i32>();
+        Ok(n1.unwrap() * n2.unwrap())
+    }
+
+    let result = multiply("10", "2");
+    assert_eq!(result.unwrap(), 20);
+
+    let result = multiply("t", "2");
+    assert_eq!(result.unwrap(), 8);
+
+    // 使用两种方式填空: map, and then
+    fn add_two(n_str: &str) -> Result<i32, ParseIntError> {
+        n_str.parse::<i32>().map(|i| i + 2)
+    }
+
+    fn multiply1(n1_str: &str, n2_str: &str) -> Result<i32, ParseIntError> {
+        n1_str.parse::<i32>().and_then(|num1| {
+            n2_str.parse::<i32>().map(|num2| num1 * num2)
+        })
+    }
+
+    assert_eq!(add_two("4").unwrap(), 6);
+
+    println!("Success!")
 }
 
 fn prac_2_11_1() {
