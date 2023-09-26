@@ -3,7 +3,10 @@
 #![allow(unused_variables)]
 
 use std::collections::btree_map::Values;
+use std::collections::{HashMap, BTreeMap, HashSet};
+// use std::{cmp::Ordering, io};
 use std::fmt::Debug;
+use std::io::{self, Write};
 use std::hash::Hash;
 use std::io::{ErrorKind, Read};
 use std::ops::Add;
@@ -15,7 +18,13 @@ use std::{
 };
 
 fn main() {
-    prac_2_11_2();
+    prac_2_12_3();
+}
+
+fn prac_2_12_3() {
+    use rand::Rng;
+    let secret = rand::thread_rng().gen_range(1..=100);
+    println!("{secret}");
 }
 
 fn prac_2_11_2() {
@@ -49,16 +58,16 @@ fn prac_2_11_2() {
     use std::num::ParseIntError;
 
     fn multiply(n1_str: &str, n2_str: &str) -> Result<i32, ParseIntError> {
-        let n1 = n1_str.parse::<i32>();
-        let n2 = n2_str.parse::<i32>();
-        Ok(n1.unwrap() * n2.unwrap())
+        let n1 = n1_str.parse::<i32>()?;
+        let n2 = n2_str.parse::<i32>()?;
+        Ok(n1 * n2)
     }
 
-    let result = multiply("10", "2");
-    assert_eq!(result.unwrap(), 20);
+    let result = multiply("10", "2").unwrap();
+    assert_eq!(result, 20);
 
-    let result = multiply("t", "2");
-    assert_eq!(result.unwrap(), 8);
+    let result = multiply("4", "2").unwrap();
+    assert_eq!(result, 8);
 
     // 使用两种方式填空: map, and then
     fn add_two(n_str: &str) -> Result<i32, ParseIntError> {
