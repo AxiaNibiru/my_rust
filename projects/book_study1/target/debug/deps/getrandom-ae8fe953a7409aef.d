@@ -1,0 +1,9 @@
+D:\dev\RustRover\my_rust\projects\book_study1\target\debug\deps\getrandom-ae8fe953a7409aef.rmeta: D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\lib.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\error.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\util.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\error_impls.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\windows.rs
+
+D:\dev\RustRover\my_rust\projects\book_study1\target\debug\deps\getrandom-ae8fe953a7409aef.d: D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\lib.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\error.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\util.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\error_impls.rs D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\windows.rs
+
+D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\lib.rs:
+D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\error.rs:
+D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\util.rs:
+D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\error_impls.rs:
+D:\system\env\rust\cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\getrandom-0.2.10\src\windows.rs:
