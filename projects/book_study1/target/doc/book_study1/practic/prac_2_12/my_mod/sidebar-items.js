@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["call_public_function_in_my_mod","function","indirect_access","private_function","public_function_in_crate"],"mod":["nested","private_nested"]};

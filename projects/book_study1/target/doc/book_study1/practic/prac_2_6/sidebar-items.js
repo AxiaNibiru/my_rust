@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["prac_2_6_3","prac_2_6_4"],"struct":["Cricle","Point"]};

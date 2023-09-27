@@ -3,10 +3,13 @@
 #![allow(unused_variables)]
 
 mod practic;
-use self::practic::prac_2_10;
-
+use crate::practic::prac_2_13;
+use prac_2_13::kinds::PrimaryColor;
+use prac_2_13::utils::mix;
 fn main() {
-    println!("重构项目结构");
+    let blue = PrimaryColor::Blue;
+    let yellow = PrimaryColor::Yellow;
+    println!("{:?}",mix(blue, yellow));
 }
 
 

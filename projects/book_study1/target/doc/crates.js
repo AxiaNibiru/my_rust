@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["ahash","book_study1","cfg_if","getrandom","num","num_bigint","num_complex","num_integer","num_iter","num_rational","num_traits","once_cell","ppv_lite86","rand","rand_chacha","rand_core","static_assertions","twox_hash"];

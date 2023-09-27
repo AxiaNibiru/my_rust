@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["prac_2_10"]};
