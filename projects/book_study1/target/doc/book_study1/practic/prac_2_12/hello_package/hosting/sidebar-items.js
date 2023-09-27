@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["seat_at_table"]};

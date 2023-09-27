@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["add_one","add_three","div","try_div"],"mod":["bar","kinds","utils"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["prac_2_7"],"struct":["Rectangle2"]};

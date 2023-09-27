@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["prac_2_11_1","prac_2_11_2"]};

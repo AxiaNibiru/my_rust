@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["function","prac_2_12_3","test_prac_2_12_2","test_prac_2_12_2_2"],"mod":["hello_package","my_mod"]};

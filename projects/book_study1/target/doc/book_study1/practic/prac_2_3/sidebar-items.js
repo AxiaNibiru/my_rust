@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["give_ownership","prac_2_3_2","practic2_3_1","take_ownership","tokio_demo"]};

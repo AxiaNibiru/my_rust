@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["List","Message"],"fn":["prac_2_4_1","prac_2_4_2","prac_2_4_3","prac_2_4_4","prac_2_4_5"],"struct":["Rectangle"]};

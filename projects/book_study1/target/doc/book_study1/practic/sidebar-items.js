@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["prac_2_10","prac_2_11","prac_2_12","prac_2_13","prac_2_2","prac_2_3","prac_2_4","prac_2_6","prac_2_7","prac_2_8","prac_2_9"]};

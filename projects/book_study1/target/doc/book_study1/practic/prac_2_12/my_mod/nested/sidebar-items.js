@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["function","private_function","public_function_in_my_mod","public_function_in_nested","public_function_in_super_mod"]};
