@@ -1,2 +1,2 @@
-pub mod prac4_1_1;
-pub mod prac4_1_2;
+pub mod prac_1;
+pub mod prac_2;

@@ -1,8 +1,12 @@
 #![allow(dead_code)]
 #![allow(unused)]
+
+
+
+use std::clone;
 ///!
 /// # 深入生命周期
-/// 
+///
 
 #[derive(Debug)]
 pub struct Foo;
@@ -14,14 +18,14 @@ impl Foo {
     pub fn share<'a>(&'a self) {}
 }
 
-pub fn prac_4_1_1() {
+pub fn demo1() {
     let mut foo = Foo;
     'c: {
         // 传入的&mut foo生命周期应该和返回的loan生命周期一样，为<'c>所以，传入的mut foo无法再使用。
         // 因为无法同时存在一个可变和其他不可变。
         let loan: &Foo = Foo::mutate_and_share(&mut foo);
         println!("{:?}", loan);
-        // foo.share(); 
+        // foo.share();
         // println!("{:?}", foo);
         println!("{:?}", loan);
     }
@@ -40,8 +44,32 @@ pub fn prac_4_1_1() {
 //     }
 // }
 
+pub fn demo2() {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+
+    pub fn get_default<'m, K, V>(map: &'m mut HashMap<K, V>, key: K) -> Option<&'m mut V>
+    where
+        K: Clone + Eq + Hash,
+        V: Default,
+    {
+        if !map.contains_key(&key) {
+            map.insert(key.clone(), V::default());
+        }
+        map.get_mut(&key)
+    }
+}
+
+pub fn demo3() {
+    fn fn_elision(x: &i32) -> &i32 {
+        x
+    }
+    // 编译器无法推测返回的引用和传入的引用谁活得更久！
+    // let closure_slision = |x: &i32| -> &i32 { x };
+}
+
 struct Interface<'b, 'a: 'b> {
-    manager: &'b mut Manager<'a>
+    manager: &'b mut Manager<'a>,
 }
 
 impl<'b, 'a: 'b> Interface<'b, 'a> {
@@ -51,7 +79,7 @@ impl<'b, 'a: 'b> Interface<'b, 'a> {
 }
 
 struct Manager<'a> {
-    text: &'a str
+    text: &'a str,
 }
 
 struct List<'a> {
@@ -59,18 +87,19 @@ struct List<'a> {
 }
 
 impl<'a> List<'a> {
-    pub fn get_interface<'b>(&'b mut self) -> Interface<'b, 'a> {
+    pub fn get_interface<'b>(&'b mut self) -> Interface<'b, 'a>
+    where
+        'a: 'b,
+    {
         Interface {
-            manager: &mut self.manager
+            manager: &mut self.manager,
         }
     }
 }
 
-pub fn demo1() {
+pub fn demo4() {
     let mut list: List<'_> = List {
-        manager: Manager {
-            text: "hello"
-        }
+        manager: Manager { text: "hello" },
     };
 
     list.get_interface().noop();
@@ -86,16 +115,19 @@ fn use_list(list: &List) {
     println!("{}", list.manager.text);
 }
 
-fn assign<T>(input: &mut T, val: T) {
-    *input = val;
+// 注意：debug 需要两个具有相同生命周期的参数
+fn debug<'a>(a: &'a str, b: &'a str) {
+    println!("a = {a:?} b = {b:?}");
 }
 
-fn demo5() {
-    let mut hello: &'static str = "hello";
+pub fn demo5() {
+    let hello: &'static str = "hello";
     {
         let world: String = String::from("world");
-        // assign(&mut hello, &world);
+        let world: &String = &world; // 'world 的生命周期比 'static 短
+        debug(hello, world); // 在这里'static 自动降级为 'world
     }
-    println!("{hello}"); // use after free 😿
 }
+
+
 
