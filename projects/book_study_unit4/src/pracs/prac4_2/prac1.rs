@@ -272,4 +272,10 @@ pub fn demo12() {
     println!("{:#p}", _count_reborrowed);
 
     assert_eq!(count, 0);
+    let mut a: String = "asd".to_string();
+    let b: &mut str = a.as_mut();
+    let c: &[u8] = a.as_ref();
+    let c: &str = a.as_ref();
+    let d: String = "ad".to_string();
+    
 }
