@@ -242,3 +242,34 @@ pub fn demo11() {
     }
     
 }
+
+/* Make it work 
+- Dont use `_reborrow` and `_count_reborrowed`
+- Dont modify `assert_eq`
+*/
+#[test]
+pub fn demo12() {
+    let mut count: i32 = 0;
+    println!("{:#p}", &count);
+
+    let mut inc/* impl FnMut() */ = move || {
+        count += 1;
+        println!("`count`: {}", count);
+        println!("{:#p}", &count);
+    };
+
+    inc();
+
+
+    let _reborrow: &i32 = &count;
+    println!("{:#p}", _reborrow);
+
+    inc();
+
+    // The closure no longer needs to borrow `&mut count`. Therefore, it is
+    // possible to reborrow without an error
+    let _count_reborrowed: &mut i32 = &mut count; 
+    println!("{:#p}", _count_reborrowed);
+
+    assert_eq!(count, 0);
+}
