@@ -227,23 +227,20 @@ pub fn demo10() {
     assert_eq!(6, answer);
 }
 
-
 #[test]
 pub fn demo11() {
-    fn factory(x:i32) -> Box<dyn Fn(i32) -> i32> {
-
+    fn factory(x: i32) -> Box<dyn Fn(i32) -> i32> {
         let num = 5;
-    
-        if x > 1{
+
+        if x > 1 {
             Box::new(move |x| x + num)
         } else {
             Box::new(move |x| x - num)
         }
     }
-    
 }
 
-/* Make it work 
+/* Make it work
 - Dont use `_reborrow` and `_count_reborrowed`
 - Dont modify `assert_eq`
 */
@@ -260,7 +257,6 @@ pub fn demo12() {
 
     inc();
 
-
     let _reborrow: &i32 = &count;
     println!("{:#p}", _reborrow);
 
@@ -268,7 +264,7 @@ pub fn demo12() {
 
     // The closure no longer needs to borrow `&mut count`. Therefore, it is
     // possible to reborrow without an error
-    let _count_reborrowed: &mut i32 = &mut count; 
+    let _count_reborrowed: &mut i32 = &mut count;
     println!("{:#p}", _count_reborrowed);
 
     assert_eq!(count, 0);
@@ -277,5 +273,21 @@ pub fn demo12() {
     let c: &[u8] = a.as_ref();
     let c: &str = a.as_ref();
     let d: String = "ad".to_string();
-    
 }
+
+/* Make it work in two ways, none of them is to remove `take(movable)` away from the code
+*/
+#[test]
+fn demo13() {
+    let movable: Box<i32> = Box::new(3);
+
+    let consume = move || {
+        println!("`movable`: {:?}", movable);
+        take(&movable);
+    };
+
+    consume();
+    consume();
+}
+
+fn take<T>(_v: &T) {}
