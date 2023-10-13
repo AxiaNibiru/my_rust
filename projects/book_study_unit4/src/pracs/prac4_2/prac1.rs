@@ -291,3 +291,33 @@ fn demo13() {
 }
 
 fn take<T>(_v: &T) {}
+
+/* Fill in the blank using two aproaches,
+and fix the errror */
+fn create_fn() -> impl FnOnce(i32) -> i32 {
+    let num = 5;
+
+    // How does the following closure capture the environment variable `num`
+    // &T, &mut T, T ?
+    move |x| x + num
+}
+
+fn demo14() {
+    let fn_plain = create_fn();
+    fn_plain(1);
+}
+
+
+
+/* Fill in the blank and fix the error*/
+fn factory(x:i32) -> Box<dyn FnOnce(i32) -> i32> {
+
+    let num = 5;
+
+    if x > 1{
+        Box::new(move |x| x + num)
+    } else {
+        Box::new(move |x| x + num)
+    }
+}
+
