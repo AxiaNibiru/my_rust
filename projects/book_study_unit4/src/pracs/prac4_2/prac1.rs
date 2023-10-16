@@ -302,7 +302,7 @@ fn create_fn() -> impl FnOnce(i32) -> i32 {
     move |x| x + num
 }
 
-fn demo14() {
+pub fn demo14() {
     let fn_plain = create_fn();
     fn_plain(1);
 }
