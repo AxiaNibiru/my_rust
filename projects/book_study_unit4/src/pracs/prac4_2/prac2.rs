@@ -1,5 +1,6 @@
 #![allow(unused)]
 #![allow(dead_code)]
+#![feature(test)]
 
 use super::prac1::demo14;
 
@@ -133,4 +134,24 @@ fn demo7() {
         .fold(0u64, |sum, acm| sum + acm);
 
     assert_eq!(9, sum);
+}
+
+
+fn sum_for(x: &[f64]) -> f64 {
+    let mut result: f64 = 0f64;
+    for i in 0..x.len() {
+        result += x[i];
+    }
+    result
+}
+
+fn sum_iter(x: &[f64]) -> f64 {
+    x.iter().sum::<f64>()
+}
+
+extern crate rand;
+#[cfg(test)]
+mod bentch {
+    use super::rand;
+    
 }
