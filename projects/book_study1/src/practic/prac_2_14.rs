@@ -42,6 +42,7 @@ pub fn prac_2_14() {
     println!("{:=^1$}","格式化字符串，居中对齐", width);
     println!("{:=^width$}","格式化字符串，居中对齐", width=width);
 
+    // let pi: f64 = std::f64::consts::PI;
     let v: f64 = 3.1415926;
     // 保留小数点后两位 => 3.14
     println!("{:.2}", v);

@@ -2,10 +2,11 @@
 #![allow(unused)]
 #![allow(unused_variables)]
 
-mod practic;
-use crate::practic::prac_2_14;
+pub mod practic;
+use practic::prac_2_13;
+
 fn main() {
-    prac_2_14::prac_2_14();
+
 }
 
 
