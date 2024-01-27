@@ -110,7 +110,6 @@ mod test3 {
                 _pin: PhantomPinned,
             };
 
-
             let mut boxed = Box::pin(res);
 
             let slice = NonNull::from(&boxed.data);
@@ -200,6 +199,6 @@ mod test3 {
 
     struct Foo<'a> {
         a: &'a String,
-        b: &'a mut String
+        b: &'a mut String,
     }
 }

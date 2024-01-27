@@ -4,3 +4,4 @@ pub mod prac4_3;
 pub mod prac4_4;
 mod prac4_5;
 
+mod prac4_6;
