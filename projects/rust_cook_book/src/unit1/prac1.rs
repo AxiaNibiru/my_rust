@@ -4,6 +4,7 @@
 
 #[cfg(test)]
 mod test {
+    use rand::distributions::{Uniform, Distribution};
     use rand::Rng;
 
     #[test]
@@ -24,6 +25,23 @@ mod test {
         let mut rng = rand::thread_rng();
         println!("Integer: {}", rng.gen_range(0..10));
         println!("Float: {}", rng.gen_range(0.0..10.0));
+    }
+
+    #[test]
+    fn test3() {
+        let mut rng = rand::thread_rng();
+        println!("Integer: {}", rng.gen_range(0..10));
+        println!("Float: {}", rng.gen_range(0.0..10.0));
+
+        let mut die: Uniform<i32> = Uniform::from(1..7);
+
+        loop {
+            let throw = die.sample(&mut rng);
+            println!("Roll the die: {}", throw);
+            if throw == 6 {
+                break;
+            }
+        }
     }
 }
 
