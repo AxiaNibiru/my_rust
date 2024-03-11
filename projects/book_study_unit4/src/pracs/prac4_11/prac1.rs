@@ -1,4 +1,4 @@
-// #![allow(unused)]
+#![allow(unused)]
 #![allow(dead_code)]
 
 #[cfg(test)]
